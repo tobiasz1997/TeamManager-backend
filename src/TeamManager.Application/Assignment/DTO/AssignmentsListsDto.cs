@@ -1,0 +1,16 @@
+﻿using System.ComponentModel.DataAnnotations;
+using TeamManager.Application.Shared.Abstractions.Browsing;
+
+namespace TeamManager.Application.Assignment.DTO;
+
+public class AssignmentsListsDto
+{
+    [property: Required]
+    public PagedResult<AssignmentDto> Todo { get; set; }
+    [property: Required]
+    public PagedResult<AssignmentDto> InProgress { get; set; }
+    [property: Required]
+    public PagedResult<AssignmentDto> Done { get; set; }
+    [property: Required]
+    public PagedResult<AssignmentDto> Aborted { get; set; }
+}
