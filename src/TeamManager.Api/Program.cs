@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Serilog;
 using TeamManager.Application;
 using TeamManager.Core;
 using TeamManager.Infrastructure;
@@ -13,6 +14,12 @@ builder.Services
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+builder.Host.UseSerilog(((context, configuration) =>
+{
+    configuration.WriteTo.Console();
+    configuration.WriteTo.Seq("http://localhost:5341");
+}));
 
 var app = builder.Build();
 

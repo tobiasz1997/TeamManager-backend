@@ -10,7 +10,6 @@ internal sealed class RefreshTokenService : IRefreshTokenService
 {
     private readonly IClock _clock;
     private readonly int _refreshTokenExpiry;
-    // private readonly TeamManagerDbContext _dbContext;
 
     public RefreshTokenService(IOptions<AuthOptions> options, IClock clock)
     {

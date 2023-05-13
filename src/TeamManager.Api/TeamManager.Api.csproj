@@ -18,4 +18,8 @@
     <ProjectReference Include="..\TeamManager.Infrastructure\TeamManager.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="TeamManager.Tests.Integration" />
+  </ItemGroup>
+
 </Project>
