@@ -57,7 +57,7 @@ public class AssignmentController : ControllerBase
     
     [HttpGet("list")]
     [SwaggerOperation("Get assignments list.")]
-    [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResult<AssignmentDto>), StatusCodes.Status200OK)]
     [ProducesResponseType( StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentsList([FromQuery] AssignmentStatusType type, [FromQuery] int page = 1, [FromQuery] int pageSize = 2)
@@ -73,7 +73,7 @@ public class AssignmentController : ControllerBase
     
     [HttpGet("lists")]
     [SwaggerOperation("Get typed lists of assignments.")]
-    [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(AssignmentsListsDto), StatusCodes.Status200OK)]
     [ProducesResponseType( StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentsLists([FromQuery] int pageSize = 2)
