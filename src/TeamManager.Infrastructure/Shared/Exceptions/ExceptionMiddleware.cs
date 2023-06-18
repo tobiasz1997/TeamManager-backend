@@ -32,7 +32,7 @@ internal sealed class ExceptionMiddleware : IMiddleware
     {
         var (statusCode, error) = exception switch
         {
-            CustomException => (StatusCodes.Status400BadRequest, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
+            BadRequestException => (StatusCodes.Status400BadRequest, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             UnauthorizedException => (StatusCodes.Status401Unauthorized, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             ForbiddenException => (StatusCodes.Status403Forbidden, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             NotFoundException => (StatusCodes.Status404NotFound, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
