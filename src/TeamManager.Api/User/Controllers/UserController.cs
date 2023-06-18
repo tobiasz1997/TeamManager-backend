@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using TeamManager.Api.Shared;
 using TeamManager.Api.User.Requests;
 using TeamManager.Application.Shared.Abstractions.Commands;
 using TeamManager.Application.Shared.Abstractions.Exceptions;
@@ -14,7 +15,7 @@ namespace TeamManager.Api.User.Controllers;
 
 [ApiController]
 [Route("user")]
-public class UserController : ControllerBase
+public class UserController : BaseApiController
 {
     private readonly ICommandHandler<SignUp> _signUpCommandHandler;
     private readonly ICommandHandler<SignIn> _signInCommandHandler;
@@ -44,13 +45,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDto>> Get()
     {
-        if (string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))
-        {
-            return NotFound();
-        }
-        
-        var userId = Guid.Parse(HttpContext.User.Identity.Name);
-        return Ok(await _getUserQueryHandler.HandleAsync(new GetUser {UserId = userId}));
+        return Ok(await _getUserQueryHandler.HandleAsync(new GetUser {UserId = UserId}));
     }
 
     [HttpPost("sign-up")]

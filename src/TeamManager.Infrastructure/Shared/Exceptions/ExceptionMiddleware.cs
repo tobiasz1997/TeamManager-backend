@@ -34,6 +34,7 @@ internal sealed class ExceptionMiddleware : IMiddleware
         {
             CustomException => (StatusCodes.Status400BadRequest, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             UnauthorizedException => (StatusCodes.Status401Unauthorized, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
+            ForbiddenException => (StatusCodes.Status403Forbidden, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             NotFoundException => (StatusCodes.Status404NotFound, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             _ => (StatusCodes.Status500InternalServerError, new ErrorResponse("error", "There was an error"))
         };

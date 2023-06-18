@@ -15,14 +15,12 @@ builder.Services
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-builder.Host.UseSerilog(((context, configuration) =>
-{
-    configuration.WriteTo.Console();
-    configuration.WriteTo.Seq("http://localhost:5341");
-}));
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
 app.UseInfrastructure();
 app.MapControllers();
 

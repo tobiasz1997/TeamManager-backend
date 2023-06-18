@@ -22,10 +22,7 @@ public static class Extensions
                 .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
-        
-        // services.AddScoped<ICommandHandler<CreateAssignment>, CreateAssignmentHandler>();
-        // services.AddScoped<IQueryHandler<GetAssignment, AssignmentDto>, GetAssignmentHandler>();
-        
+
         return services;
     }
 }

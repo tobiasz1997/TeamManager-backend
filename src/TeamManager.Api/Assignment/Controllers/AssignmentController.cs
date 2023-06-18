@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using TeamManager.Api.Assignment.Requests;
+using TeamManager.Api.Shared;
 using TeamManager.Application.Assignment.Commands;
 using TeamManager.Application.Assignment.DTO;
 using TeamManager.Application.Assignment.Queries;
@@ -16,7 +17,7 @@ namespace TeamManager.Api.Assignment.Controllers;
 [ApiController]
 [Authorize]
 [Route("assignment")]
-public class AssignmentController : ControllerBase
+public class AssignmentController : BaseApiController
 {
     private readonly IQueryHandler<GetAssignment, AssignmentDto> _getAssignment;
     private readonly IQueryHandler<GetAssignmentsList, PagedResult<AssignmentDto>> _getAssignmentsList;
@@ -62,13 +63,7 @@ public class AssignmentController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentsList([FromQuery] AssignmentStatusType type, [FromQuery] int page = 1, [FromQuery] int pageSize = 2)
     {
-        if (string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))
-        {
-            return NotFound();
-        }
-        
-        var userId = Guid.Parse(HttpContext.User.Identity.Name);
-        return Ok(await _getAssignmentsList.HandleAsync(new GetAssignmentsList {UserId = userId, Page = page, PageSize = pageSize, Type = type}));
+        return Ok(await _getAssignmentsList.HandleAsync(new GetAssignmentsList {UserId = UserId, Page = page, PageSize = pageSize, Type = type}));
     }
     
     [HttpGet("lists")]
@@ -78,13 +73,7 @@ public class AssignmentController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentsLists([FromQuery] int pageSize = 2)
     {
-        if (string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))
-        {
-            return NotFound();
-        }
-        
-        var userId = Guid.Parse(HttpContext.User.Identity.Name);
-        return Ok(await _getAssignmentsLists.HandleAsync(new GetAssignmentsLists {UserId = userId, PageSize = pageSize}));
+        return Ok(await _getAssignmentsLists.HandleAsync(new GetAssignmentsLists {UserId = UserId, PageSize = pageSize}));
     }
     
     [HttpPost]
@@ -94,14 +83,8 @@ public class AssignmentController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CreateAssignment(CreateAssignmentRequest command)
     {
-        if (string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))
-        {
-            return NotFound();
-        }
-        
-        var userId = Guid.Parse(HttpContext.User.Identity.Name);
         var newId = Guid.NewGuid();
-        await _createAssignment.HandleAsync(new CreateAssignment(newId, userId, command.Name, command.Description, command.Priority, command.Status));
+        await _createAssignment.HandleAsync(new CreateAssignment(newId, UserId, command.Name, command.Description, command.Priority, command.Status));
         return Ok(newId);
     }
     
