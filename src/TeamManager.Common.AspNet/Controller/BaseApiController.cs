@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using TeamManager.Common.AspNet.Exceptions;
 
-namespace TeamManager.Api.Shared;
+namespace TeamManager.Common.AspNet.Controller;
 
 public class BaseApiController : ControllerBase
 {

@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using TeamManager.Api.Shared;
 using TeamManager.Api.User.Requests;
 using TeamManager.Application.Shared.Abstractions.Commands;
-using TeamManager.Application.Shared.Abstractions.Exceptions;
 using TeamManager.Application.Shared.Abstractions.Queries;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Application.User.Commands;
 using TeamManager.Application.User.DTO;
 using TeamManager.Application.User.Queries;
+using TeamManager.Common.AspNet.Controller;
+using TeamManager.Common.AspNet.Exceptions.Abstractions;
 
 namespace TeamManager.Api.User.Controllers;
 

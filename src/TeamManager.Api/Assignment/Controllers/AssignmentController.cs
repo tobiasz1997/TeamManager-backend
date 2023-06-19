@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using TeamManager.Api.Assignment.Requests;
-using TeamManager.Api.Shared;
 using TeamManager.Application.Assignment.Commands;
 using TeamManager.Application.Assignment.DTO;
 using TeamManager.Application.Assignment.Queries;
 using TeamManager.Application.Shared.Abstractions.Browsing;
 using TeamManager.Application.Shared.Abstractions.Commands;
-using TeamManager.Application.Shared.Abstractions.Exceptions;
 using TeamManager.Application.Shared.Abstractions.Queries;
+using TeamManager.Common.AspNet.Controller;
+using TeamManager.Common.AspNet.Exceptions.Abstractions;
 using TeamManager.Core.User.Enums;
 
 namespace TeamManager.Api.Assignment.Controllers;

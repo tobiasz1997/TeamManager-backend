@@ -1,8 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using TeamManager.Application.Shared.Abstractions.Exceptions;
-using TeamManager.Core.Shared.Exceptions;
+using TeamManager.Common.AspNet.Exceptions.Abstractions;
 
 namespace TeamManager.Infrastructure.Shared.Exceptions;
 

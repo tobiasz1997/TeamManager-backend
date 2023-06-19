@@ -36,7 +36,7 @@ internal sealed class JwtService : IJwtService
         {
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
-            new(ClaimTypes.Email, email),
+            new(JwtRegisteredClaimNames.Email, email),
         };
 
         var jwt = new JwtSecurityToken(_issuer, _audience, claims, now, expires, _signingCredentials);
