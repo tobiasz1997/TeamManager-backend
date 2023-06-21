@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace TeamManger.Common.Extensions.Swagger;
@@ -47,15 +48,18 @@ public static class SwaggerExtension
 
     public static WebApplication UseSwaggerExtension(this WebApplication app)
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        app.UseReDoc(rec =>
+        if (app.Environment.IsDevelopment())
         {
-            rec.RoutePrefix = "docs";
-            rec.DocumentTitle = "Team Manager API";
-            rec.SpecUrl("/swagger/v1/swagger.json");
-        });
-        
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseReDoc(rec =>
+            {
+                rec.RoutePrefix = "docs";
+                rec.DocumentTitle = "Team Manager API";
+                rec.SpecUrl("/swagger/v1/swagger.json");
+            });
+        }
+
         return app;
     }
 }

@@ -17,19 +17,16 @@ public static class Extensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<ExceptionMiddleware>();
-        
         services
+            .AddSingleton<ExceptionMiddleware>()
             .AddPostgres(configuration)
             .AddSingleton<IClock, Clock>()
             .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()
-            .AddSingleton<IPasswordService, PasswordService>();
-
-        services.AddAuth(configuration);
-        services.AddHttpContextAccessor();
-
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerExtension();
+            .AddSingleton<IPasswordService, PasswordService>()
+            .AddAuth(configuration)
+            .AddHttpContextAccessor()
+            .AddEndpointsApiExplorer()
+            .AddSwaggerExtension();
 
         return services;
     }

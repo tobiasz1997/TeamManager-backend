@@ -3,6 +3,7 @@ using Serilog;
 using TeamManager.Application;
 using TeamManager.Core;
 using TeamManager.Infrastructure;
+using TeamManger.Common.Extensions.Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
@@ -15,8 +16,7 @@ builder.Services
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
-    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
+builder.Host.AddSerilog();
 
 var app = builder.Build();
 
