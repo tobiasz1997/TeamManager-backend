@@ -1,5 +1,6 @@
-﻿using TeamManager.Application.Assignment.Exceptions;
-using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using MediatR;
+using TeamManager.Application.Assignment.Exceptions;
+using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Assignment.Repositories;
 
 namespace TeamManager.Application.Assignment.Commands.Handlers;
@@ -12,16 +13,17 @@ public sealed class DeleteAssignmentHandler : ICommandHandler<DeleteAssignment>
     {
         _assignmentRepository = assignmentRepository;
     }
-    
-    public async Task HandleAsync(DeleteAssignment command)
+
+    public async Task<Unit> Handle(DeleteAssignment request, CancellationToken cancellationToken)
     {
-        var result = await _assignmentRepository.GetAsync(command.Id);
+        var result = await _assignmentRepository.GetAsync(request.Id);
         
         if (result is null)
         {
-            throw new AssignmentNotFoundException(command.Id);
+            throw new AssignmentNotFoundException(request.Id);
         }
         
         await _assignmentRepository.DeleteAsync(result);
+        return Unit.Value;
     }
 }

@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using TeamManager.Api.Assignment.Requests;
 using TeamManager.Application.Assignment.Commands;
 using TeamManager.Application.Assignment.DTO;
 using TeamManager.Application.Assignment.Queries;
-using TeamManager.Application.Shared.Abstractions.Browsing;
-using TeamManager.Application.Shared.Abstractions.Commands;
-using TeamManager.Application.Shared.Abstractions.Queries;
 using TeamManager.Common.AspNet.Controller;
-using TeamManager.Common.AspNet.Exceptions.Abstractions;
+using TeamManager.Common.Core.Browsing;
+using TeamManager.Common.Core.Exceptions.Abstractions;
 using TeamManager.Core.User.Enums;
 
 namespace TeamManager.Api.Assignment.Controllers;
@@ -19,32 +18,13 @@ namespace TeamManager.Api.Assignment.Controllers;
 [Route("assignment")]
 public class AssignmentController : BaseApiController
 {
-    private readonly IQueryHandler<GetAssignment, AssignmentDto> _getAssignment;
-    private readonly IQueryHandler<GetAssignmentsList, PagedResult<AssignmentDto>> _getAssignmentsList;
-    private readonly IQueryHandler<GetAssignmentsLists, AssignmentsListsDto> _getAssignmentsLists;
-    private readonly ICommandHandler<CreateAssignment> _createAssignment;
-    private readonly ICommandHandler<DeleteAssignment> _deleteAssignment;
-    private readonly ICommandHandler<UpdateAssignment> _updateAssignment;
-    private readonly ICommandHandler<UpdateAssignmentStatus> _updateAssignmentStatus;
+    private readonly IMediator _mediator;
 
-
-    public AssignmentController(
-        IQueryHandler<GetAssignment, AssignmentDto> getAssignment, 
-        IQueryHandler<GetAssignmentsList, PagedResult<AssignmentDto>> getAssignmentsList,
-        IQueryHandler<GetAssignmentsLists, AssignmentsListsDto> getAssignmentsLists,
-        ICommandHandler<CreateAssignment> createAssignment,
-        ICommandHandler<DeleteAssignment> deleteAssignment,
-        ICommandHandler<UpdateAssignment> updateAssignment,
-        ICommandHandler<UpdateAssignmentStatus> updateAssignmentStatus)
+    public AssignmentController(IMediator mediator)
     {
-        _getAssignment = getAssignment;
-        _getAssignmentsList = getAssignmentsList;
-        _getAssignmentsLists = getAssignmentsLists;
-        _createAssignment = createAssignment;
-        _deleteAssignment = deleteAssignment;
-        _updateAssignment = updateAssignment;
-        _updateAssignmentStatus = updateAssignmentStatus;
+        _mediator = mediator;
     }
+
 
     [HttpGet("{id:guid}")]
     [SwaggerOperation("Get assignment.")]
@@ -53,7 +33,7 @@ public class AssignmentController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentById(Guid id)
     {
-        return Ok(await _getAssignment.HandleAsync(new GetAssignment {Id = id}));
+        return Ok(await _mediator.Send(new GetAssignment {Id = id}));
     }
     
     [HttpGet("list")]
@@ -63,7 +43,7 @@ public class AssignmentController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentsList([FromQuery] AssignmentStatusType type, [FromQuery] int page = 1, [FromQuery] int pageSize = 2)
     {
-        return Ok(await _getAssignmentsList.HandleAsync(new GetAssignmentsList {UserId = UserId, Page = page, PageSize = pageSize, Type = type}));
+        return Ok(await _mediator.Send(new GetAssignmentsList {UserId = UserId, Page = page, PageSize = pageSize, Type = type}));
     }
     
     [HttpGet("lists")]
@@ -73,7 +53,7 @@ public class AssignmentController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetAssignmentsLists([FromQuery] int pageSize = 2)
     {
-        return Ok(await _getAssignmentsLists.HandleAsync(new GetAssignmentsLists {UserId = UserId, PageSize = pageSize}));
+        return Ok(await _mediator.Send(new GetAssignmentsLists {UserId = UserId, PageSize = pageSize}));
     }
     
     [HttpPost]
@@ -84,7 +64,7 @@ public class AssignmentController : BaseApiController
     public async Task<ActionResult> CreateAssignment(CreateAssignmentRequest command)
     {
         var newId = Guid.NewGuid();
-        await _createAssignment.HandleAsync(new CreateAssignment(newId, UserId, command.Name, command.Description, command.Priority, command.Status));
+        await _mediator.Send(new CreateAssignment(newId, UserId, command.Name, command.Description, command.Priority, command.Status));
         return Ok(newId);
     }
     
@@ -95,7 +75,7 @@ public class AssignmentController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateAssignment(UpdateAssignmentRequest command)
     {
-        await _updateAssignment.HandleAsync(new UpdateAssignment(command.Id, command.Name, command.Description, command.Priority));
+        await _mediator.Send(new UpdateAssignment(command.Id, command.Name, command.Description, command.Priority));
         return Ok();
     }
 
@@ -106,7 +86,7 @@ public class AssignmentController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateAssignmentStatus(UpdateAssignmentStatus command)
     {
-        await _updateAssignmentStatus.HandleAsync(new UpdateAssignmentStatus(command.Id, command.Status));
+        await _mediator.Send(new UpdateAssignmentStatus(command.Id, command.Status));
         return Ok();
     }
     
@@ -117,7 +97,7 @@ public class AssignmentController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAssignment(Guid id)
     {
-        await _deleteAssignment.HandleAsync(new DeleteAssignment(id));
+        await _mediator.Send(new DeleteAssignment(id));
         return Ok();
     }
 }

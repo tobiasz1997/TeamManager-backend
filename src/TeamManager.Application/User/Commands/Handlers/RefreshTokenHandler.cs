@@ -1,7 +1,8 @@
-﻿using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using MediatR;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Application.User.DTO;
 using TeamManager.Application.User.Exceptions;
+using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.User.Repositories;
 
 namespace TeamManager.Application.User.Commands.Handlers;
@@ -31,9 +32,9 @@ internal sealed class RefreshTokenHandler : ICommandHandler<RefreshToken>
         _userRepository = userRepository;
     }
 
-    public async Task HandleAsync(RefreshToken command)
+    public async Task<Unit> Handle(RefreshToken request, CancellationToken cancellationToken)
     {
-        var token = await _refreshTokenRepository.GetByToken(command.Token);
+        var token = await _refreshTokenRepository.GetByToken(request.Token);
 
         if (token is null || token.ExpiresAt < _clock.Current())
         {
@@ -52,5 +53,7 @@ internal sealed class RefreshTokenHandler : ICommandHandler<RefreshToken>
         await _refreshTokenRepository.Update(token);
 
         _tokenStorage.Set(new AuthResultDto() {AccessToken = accessToken, RefreshToken = token.Token});
+
+        return Unit.Value;
     }
 }

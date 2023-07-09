@@ -1,4 +1,4 @@
-﻿using TeamManager.Common.AspNet.Exceptions.Abstractions;
+﻿using TeamManager.Common.Core.Exceptions.Abstractions;
 
 namespace TeamManager.Application.User.Exceptions;
 

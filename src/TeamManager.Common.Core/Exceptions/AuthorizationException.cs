@@ -1,6 +1,6 @@
-using TeamManager.Common.AspNet.Exceptions.Abstractions;
+using TeamManager.Common.Core.Exceptions.Abstractions;
 
-namespace TeamManager.Common.AspNet.Exceptions;
+namespace TeamManager.Common.Core.Exceptions;
 
 public class AuthorizationException : UnauthorizedException
 {

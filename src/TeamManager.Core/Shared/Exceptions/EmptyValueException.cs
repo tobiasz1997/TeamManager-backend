@@ -1,6 +1,8 @@
-﻿namespace TeamManager.Core.Shared.Exceptions;
+﻿using TeamManager.Common.Core.Exceptions.Abstractions;
 
-public sealed class EmptyValueException : CustomException
+namespace TeamManager.Core.Shared.Exceptions;
+
+public sealed class EmptyValueException : MethodNotAllowedException
 {
     public string Name { get;  }
     public EmptyValueException(string name) : base($"{name} is empty.")

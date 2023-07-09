@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TeamManager.Application.Shared.Abstractions.Commands;
-using TeamManager.Application.Shared.Abstractions.Queries;
+using TeamManager.Common.MediatR.Commands;
+using TeamManager.Common.MediatR.Queries;
 
 namespace TeamManager.Application;
 

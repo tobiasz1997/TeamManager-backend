@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TeamManager.Common.AspNet.Exceptions;
+using TeamManager.Common.Core.Exceptions;
 
 namespace TeamManager.Common.AspNet.Controller;
 

@@ -1,7 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using TeamManager.Common.AspNet.Exceptions.Abstractions;
+using TeamManager.Common.Core.Exceptions.Abstractions;
 
 namespace TeamManager.Infrastructure.Shared.Exceptions;
 
@@ -35,6 +35,7 @@ internal sealed class ExceptionMiddleware : IMiddleware
             UnauthorizedException => (StatusCodes.Status401Unauthorized, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             ForbiddenException => (StatusCodes.Status403Forbidden, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             NotFoundException => (StatusCodes.Status404NotFound, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
+            MethodNotAllowedException => (StatusCodes.Status405MethodNotAllowed, new ErrorResponse(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
             _ => (StatusCodes.Status500InternalServerError, new ErrorResponse("error", "There was an error"))
         };
 

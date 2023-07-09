@@ -1,6 +1,6 @@
 ﻿using TeamManager.Application.Assignment.DTO;
 using TeamManager.Application.Assignment.Exceptions;
-using TeamManager.Application.Shared.Abstractions.Queries;
+using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.Assignment.Repositories;
 
 namespace TeamManager.Application.Assignment.Queries.Handlers;
@@ -13,14 +13,14 @@ public sealed class GetAssignmentHandler : IQueryHandler<GetAssignment, Assignme
     {
         _assignmentRepository = assignmentRepository;
     }
-    
-    public async Task<AssignmentDto> HandleAsync(GetAssignment query)
+
+    public async Task<AssignmentDto> Handle(GetAssignment request, CancellationToken cancellationToken)
     {
-        var result = await _assignmentRepository.GetAsync(query.Id);
+        var result = await _assignmentRepository.GetAsync(request.Id);
         
         if (result is null)
         {
-            throw new AssignmentNotFoundException(query.Id);
+            throw new AssignmentNotFoundException(request.Id);
         }
 
         return new AssignmentDto()

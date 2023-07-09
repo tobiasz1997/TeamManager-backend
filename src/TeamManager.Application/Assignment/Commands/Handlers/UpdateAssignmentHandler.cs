@@ -1,5 +1,6 @@
-﻿using TeamManager.Application.Assignment.Exceptions;
-using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using MediatR;
+using TeamManager.Application.Assignment.Exceptions;
+using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Assignment.Repositories;
 
 namespace TeamManager.Application.Assignment.Commands.Handlers;
@@ -13,16 +14,17 @@ public sealed class UpdateAssignmentHandler : ICommandHandler<UpdateAssignment>
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task HandleAsync(UpdateAssignment command)
+    public async Task<Unit> Handle(UpdateAssignment request, CancellationToken cancellationToken)
     {
-        var result = await _assignmentRepository.GetAsync(command.Id);
+        var result = await _assignmentRepository.GetAsync(request.Id);
         
         if (result is null)
         {
-            throw new AssignmentNotFoundException(command.Id);
+            throw new AssignmentNotFoundException(request.Id);
         }
         
-        result.UpdateAssignment(command.Name, command.Description, command.Priority);
+        result.UpdateAssignment(request.Name, request.Description, request.Priority);
         await _assignmentRepository.UpdateAsync(result);
+        return Unit.Value;
     }
 }

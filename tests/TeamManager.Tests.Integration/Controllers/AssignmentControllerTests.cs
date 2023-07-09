@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Shouldly;
 using TeamManager.Api.Assignment.Requests;
 using TeamManager.Application.Assignment.DTO;
-using TeamManager.Application.Shared.Abstractions.Browsing;
+using TeamManager.Common.Core.Browsing;
 using TeamManager.Core.Assignment.Models;
 using TeamManager.Core.Shared.ValueObjects;
 using TeamManager.Core.User.Enums;

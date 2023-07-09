@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TeamManager.Application.Shared.Abstractions.Commands;
+using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Assignment.Repositories;
 using TeamManager.Core.User.Repositories;
 using TeamManager.Infrastructure.DAL.Decorators;

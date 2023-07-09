@@ -1,4 +1,4 @@
-﻿namespace TeamManager.Common.AspNet.Exceptions.Abstractions;
+﻿namespace TeamManager.Common.Core.Exceptions.Abstractions;
 
 public abstract class UnauthorizedException : Exception
 {

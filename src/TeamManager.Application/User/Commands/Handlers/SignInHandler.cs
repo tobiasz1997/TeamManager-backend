@@ -1,7 +1,8 @@
-﻿using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using MediatR;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Application.User.DTO;
 using TeamManager.Application.User.Exceptions;
+using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.User.Repositories;
 
 namespace TeamManager.Application.User.Commands.Handlers;
@@ -31,15 +32,15 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
         _jwtService = jwtService;
     }
 
-    public async Task HandleAsync(SignIn command)
+    public async Task<Unit> Handle(SignIn request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByEmailAsync(command.Email);
+        var user = await _userRepository.GetByEmailAsync(request.Email);
         if (user is null)
         {
             throw new InvalidCredentialsException();
         }
 
-        if (!_passwordService.Validate(command.Password, user.Password))
+        if (!_passwordService.Validate(request.Password, user.Password))
         {
             throw new InvalidCredentialsException();
         }
@@ -59,5 +60,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
         }
 
         _tokenStorage.Set(new AuthResultDto() {AccessToken = accessToken, RefreshToken = token.Token});
+
+        return Unit.Value;
     }
 }

@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TeamManager.Common.AspNet\TeamManager.Common.AspNet.csproj" />
+      <ProjectReference Include="..\TeamManager.Common.MediatR\TeamManager.Common.MediatR.csproj" />
       <ProjectReference Include="..\TeamManager.Core\TeamManager.Core.csproj" />
     </ItemGroup>
 

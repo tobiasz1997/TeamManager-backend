@@ -1,8 +1,9 @@
-﻿using TeamManager.Core.Shared.Exceptions;
+﻿using TeamManager.Common.Core.Exceptions.Abstractions;
+using TeamManager.Core.Shared.Exceptions;
 
 namespace TeamManager.Core.Assignment.Exceptions;
 
-public class MinimumValueException : CustomException
+public class MinimumValueException : MethodNotAllowedException
 {
     public string Name { get;  }
     public int CurrentValue { get; }
