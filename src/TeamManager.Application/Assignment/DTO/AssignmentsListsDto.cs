@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TeamManager.Application.Shared.Abstractions.Browsing;
+using TeamManager.Common.Core.Browsing;
 
 namespace TeamManager.Application.Assignment.DTO;
 

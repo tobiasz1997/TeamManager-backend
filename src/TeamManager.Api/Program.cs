@@ -1,28 +1,28 @@
 using System.Text.Json.Serialization;
 using Serilog;
 using TeamManager.Application;
+using TeamManager.Common.MediatR;
 using TeamManager.Core;
 using TeamManager.Infrastructure;
+using TeamManger.Common.Extensions.Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCore()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
+    .AddMediatrExtension()
     .AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-builder.Host.UseSerilog(((context, configuration) =>
-{
-    configuration.WriteTo.Console();
-    configuration.WriteTo.Seq("http://localhost:5341");
-}));
+builder.Host.AddSerilog();
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
 app.UseInfrastructure();
 app.MapControllers();
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TeamManager.Application.Shared.Abstractions.Commands;
-using TeamManager.Application.Shared.Abstractions.Queries;
+using TeamManager.Common.MediatR.Commands;
+using TeamManager.Common.MediatR.Queries;
 
 namespace TeamManager.Application;
 
@@ -22,10 +22,7 @@ public static class Extensions
                 .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
-        
-        // services.AddScoped<ICommandHandler<CreateAssignment>, CreateAssignmentHandler>();
-        // services.AddScoped<IQueryHandler<GetAssignment, AssignmentDto>, GetAssignmentHandler>();
-        
+
         return services;
     }
 }

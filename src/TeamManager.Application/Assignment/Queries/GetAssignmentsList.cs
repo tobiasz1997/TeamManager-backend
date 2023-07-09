@@ -1,14 +1,14 @@
 ﻿using TeamManager.Application.Assignment.DTO;
-using TeamManager.Application.Shared.Abstractions.Browsing;
-using TeamManager.Application.Shared.Abstractions.Queries;
+using TeamManager.Common.Core.Browsing;
+using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.User.Enums;
 
 namespace TeamManager.Application.Assignment.Queries;
 
 public class GetAssignmentsList : IQuery<PagedResult<AssignmentDto>>
 {
-    public Guid UserId { get; set; }
-    public AssignmentStatusType Type { get; set; }
-    public int Page { get; set; }
-    public int PageSize { get; set; }
+    public Guid UserId { get; init; }
+    public AssignmentStatusType Type { get; init; }
+    public int Page { get; init; }
+    public int PageSize { get; init; }
 }

@@ -1,4 +1,5 @@
-﻿using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using MediatR;
+using TeamManager.Common.MediatR.Commands;
 
 namespace TeamManager.Infrastructure.DAL.Decorators;
 
@@ -13,8 +14,9 @@ internal sealed class UnitOfWorkCommandHandlerDecorator<TCommand> : ICommandHand
         _unitOfWork = unitOfWork;
     }
 
-    public async Task HandleAsync(TCommand command)
+    public async Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        await _unitOfWork.ExecuteAsync(() => _commandHandler.HandleAsync(command));
+        await _unitOfWork.ExecuteAsync(() => _commandHandler.Handle(request, cancellationToken));
+        return Unit.Value;
     }
 }

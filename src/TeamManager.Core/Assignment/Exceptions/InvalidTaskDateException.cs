@@ -1,8 +1,9 @@
-﻿using TeamManager.Core.Shared.Exceptions;
+﻿using TeamManager.Common.Core.Exceptions.Abstractions;
+using TeamManager.Core.Shared.Exceptions;
 
 namespace TeamManager.Core.Assignment.Exceptions;
 
-public sealed class InvalidTaskDateException : CustomException
+public sealed class InvalidTaskDateException : MethodNotAllowedException
 {
     private DateTime Date { get; }
 

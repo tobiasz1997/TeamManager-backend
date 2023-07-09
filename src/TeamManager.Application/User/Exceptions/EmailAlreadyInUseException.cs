@@ -1,8 +1,8 @@
-﻿using TeamManager.Core.Shared.Exceptions;
+﻿using TeamManager.Common.Core.Exceptions.Abstractions;
 
 namespace TeamManager.Application.User.Exceptions;
 
-public class EmailAlreadyInUseException : CustomException
+public class EmailAlreadyInUseException : MethodNotAllowedException
 {
     public string Email { get; }
     

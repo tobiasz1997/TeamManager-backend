@@ -1,4 +1,4 @@
-﻿using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using TeamManager.Common.MediatR.Commands;
 
 namespace TeamManager.Application.Assignment.Commands;
 

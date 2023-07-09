@@ -6,11 +6,11 @@ namespace TeamManager.Api.Assignment.Requests;
 public class CreateAssignmentRequest
 {
     [property: Required] 
-    public string Name { get; set; }
+    public string Name { get; init; }
     [property: Required] 
-    public string Description { get; set; }
+    public string Description { get; init; }
     [property: Required] 
     public int Priority { get; set; }
     [property: Required]
-    public AssignmentStatusType Status { get; set; }
+    public AssignmentStatusType Status { get; init; }
 }
