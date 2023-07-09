@@ -5,5 +5,5 @@ namespace TeamManager.Api.User.Requests;
 public class RefreshTokenRequest
 {
     [property: Required] 
-    public string RefreshToken { get; set; }
+    public string RefreshToken { get; init; }
 };

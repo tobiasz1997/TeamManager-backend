@@ -1,9 +1,9 @@
-﻿using TeamManager.Application.Shared.Abstractions.Queries;
-using TeamManager.Application.User.DTO;
+﻿using TeamManager.Application.User.DTO;
+using TeamManager.Common.MediatR.Queries;
 
 namespace TeamManager.Application.User.Queries;
 
 public class GetUser : IQuery<UserDto>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; init; }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TeamManager.Application.Shared.Abstractions.Browsing;
+namespace TeamManager.Common.Core.Browsing;
 
 public record PagedResult<TItem>
 {

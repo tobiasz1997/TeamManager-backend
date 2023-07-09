@@ -1,4 +1,5 @@
-﻿using TeamManager.Application.Shared.Abstractions.Commands;
+﻿using MediatR;
+using TeamManager.Common.MediatR.Commands;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Application.User.DTO;
 using TeamManager.Application.User.Exceptions;
@@ -27,16 +28,16 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
         _refreshTokenService = refreshTokenService;
         _refreshTokenRepository = refreshTokenRepository;
     }
-    
-    public async Task HandleAsync(SignUp command)
+
+    public async Task<Unit> Handle(SignUp request, CancellationToken cancellationToken)
     {
-        if (await _userRepository.GetByEmailAsync(new Email(command.Email)) is not null)
+        if (await _userRepository.GetByEmailAsync(new Email(request.Email)) is not null)
         {
-            throw new EmailAlreadyInUseException(command.Email);
+            throw new EmailAlreadyInUseException(request.Email);
         }
         
-        var securedPassword = _passwordService.Secure(command.Password);
-        var user = new Core.User.Models.User(command.Id, command.Email, securedPassword, command.FirstName, command.LastName,
+        var securedPassword = _passwordService.Secure(request.Password);
+        var user = new Core.User.Models.User(request.Id, request.Email, securedPassword, request.FirstName, request.LastName,
             _clock.Current());
 
         await _userRepository.AddAsync(user);
@@ -47,5 +48,7 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
         await _refreshTokenRepository.Insert(refreshToken);
         
         _tokenStorage.Set(new AuthResultDto() { AccessToken = accessToken, RefreshToken = refreshToken.Token});
+
+        return Unit.Value;
     }
 }

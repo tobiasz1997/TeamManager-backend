@@ -6,13 +6,13 @@ namespace TeamManager.Api.Assignment.Requests;
 public class UpdateAssignmentRequest
 {
     [property: Required] 
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     [property: Required] 
-    public string Name { get; set; }
+    public string Name { get; init; }
     [property: Required] 
-    public string Description {get; set;}
+    public string Description {get; init;}
     [property: Required] 
-    public int Priority { get; set; }
+    public int Priority { get; init; }
     [property: Required] 
-    public AssignmentStatusType Status { get; set; }
+    public AssignmentStatusType Status { get; init; }
 }

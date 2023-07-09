@@ -1,9 +1,8 @@
-﻿using TeamManager.Application.Shared.Abstractions.Exceptions;
-using TeamManager.Core.Shared.Exceptions;
+using TeamManager.Common.Core.Exceptions.Abstractions;
 
 namespace TeamManager.Application.User.Exceptions;
 
-public class AuthenticationException : UnauthorizedException
+public class AuthenticationException: UnauthorizedException
 {
     public AuthenticationException() : base("Unauthenticated")
     {

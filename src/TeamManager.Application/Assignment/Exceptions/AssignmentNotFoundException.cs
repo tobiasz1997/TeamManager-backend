@@ -1,4 +1,4 @@
-﻿using TeamManager.Application.Shared.Abstractions.Exceptions;
+﻿using TeamManager.Common.Core.Exceptions.Abstractions;
 
 namespace TeamManager.Application.Assignment.Exceptions;
 

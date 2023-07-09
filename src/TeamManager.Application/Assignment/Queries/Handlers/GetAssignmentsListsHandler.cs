@@ -1,6 +1,6 @@
 ﻿using TeamManager.Application.Assignment.DTO;
-using TeamManager.Application.Shared.Abstractions.Browsing;
-using TeamManager.Application.Shared.Abstractions.Queries;
+using TeamManager.Common.Core.Browsing;
+using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.Assignment.Repositories;
 using TeamManager.Core.Shared.ValueObjects;
 using TeamManager.Core.User.Enums;
@@ -15,11 +15,11 @@ public sealed class GetAssignmentsListsHandler : IQueryHandler<GetAssignmentsLis
     {
         _assignmentRepository = assignmentRepository;
     }
-    
-    public async Task<AssignmentsListsDto> HandleAsync(GetAssignmentsLists query)
+
+    public async Task<AssignmentsListsDto> Handle(GetAssignmentsLists request, CancellationToken cancellationToken)
     {
         var assignments = await _assignmentRepository.GetAllAsync();
-        var filteredAssignments = assignments.Where(x => x.UserId == new Id(query.UserId)).OrderBy(x => x.StartDate).Select(x => new AssignmentDto()
+        var filteredAssignments = assignments.Where(x => x.UserId == new Id(request.UserId)).OrderBy(x => x.StartDate).Select(x => new AssignmentDto()
         {
             Id = x.Id,
             Name = x.Name,
@@ -40,10 +40,10 @@ public sealed class GetAssignmentsListsHandler : IQueryHandler<GetAssignmentsLis
 
         var results = new AssignmentsListsDto
         {
-            Todo = new PagedResult<AssignmentDto>(todoAssignments.Take(query.PageSize), todoAssignments.Count()),
-            InProgress = new PagedResult<AssignmentDto>(inProgressAssignments.Take(query.PageSize), inProgressAssignments.Count()),
-            Done = new PagedResult<AssignmentDto>(doneAssignments.Take(query.PageSize), doneAssignments.Count()),
-            Aborted = new PagedResult<AssignmentDto>(abortedAssignments.Take(query.PageSize), abortedAssignments.Count()),
+            Todo = new PagedResult<AssignmentDto>(todoAssignments.Take(request.PageSize), todoAssignments.Count()),
+            InProgress = new PagedResult<AssignmentDto>(inProgressAssignments.Take(request.PageSize), inProgressAssignments.Count()),
+            Done = new PagedResult<AssignmentDto>(doneAssignments.Take(request.PageSize), doneAssignments.Count()),
+            Aborted = new PagedResult<AssignmentDto>(abortedAssignments.Take(request.PageSize), abortedAssignments.Count()),
         };
 
         return results;
