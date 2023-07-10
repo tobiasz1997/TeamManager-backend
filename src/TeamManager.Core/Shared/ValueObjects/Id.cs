@@ -4,7 +4,6 @@ namespace TeamManager.Core.Shared.ValueObjects;
 
 public sealed record Id
 {
-
     public Guid Value { get; }
 
     public Id(Guid value)

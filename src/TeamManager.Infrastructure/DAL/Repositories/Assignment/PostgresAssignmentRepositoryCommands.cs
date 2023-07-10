@@ -2,6 +2,7 @@
 using TeamManager.Core.Assignment.Models;
 using TeamManager.Core.Assignment.Repositories;
 using TeamManager.Core.Shared.ValueObjects;
+using TeamManager.Infrastructure.DAL;
 
 namespace TeamManager.Infrastructure.DAL.Repositories;
 
