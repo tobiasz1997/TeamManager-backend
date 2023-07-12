@@ -2,10 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeamManager.Common.MediatR.Commands;
-using TeamManager.Core.Assignment.Repositories;
-using TeamManager.Core.User.Repositories;
+using TeamManager.Core.Assignments.Repositories;
+using TeamManager.Core.Timers.Repositories;
+using TeamManager.Core.Users.Repositories;
 using TeamManager.Infrastructure.DAL.Decorators;
-using TeamManager.Infrastructure.DAL.Repositories;
+using TeamManager.Infrastructure.DAL.Repositories.Assignments;
+using TeamManager.Infrastructure.DAL.Repositories.Timers;
+using TeamManager.Infrastructure.DAL.Repositories.Users;
 
 namespace TeamManager.Infrastructure.DAL;
 
@@ -24,6 +27,10 @@ internal static class Extensions
         service.AddScoped<IUserRepositoryCommands, PostgresUserRepositoryCommands>();
         service.AddScoped<IUserRepositoryQueries, PostgresUserRepositoryQueries>();
         service.AddScoped<IRefreshTokenRepositoryCommands, PostgresRefreshTokenRepositoryCommands>();
+        service.AddScoped<IProjectRepositoryCommand, PostgresProjectRepositoryCommands>();
+        service.AddScoped<IProjectRepositoryQueries, PostgresProjectRepositoryQueries>();
+        service.AddScoped<ITimerRepositoryCommands, PostgresTimerRepositoryCommands>();
+        service.AddScoped<ITimerRepositoryQueries, PostgresTimerRepositoryQueries>();
         service.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
         service.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
         service.AddHostedService<DatabaseInitializer>();

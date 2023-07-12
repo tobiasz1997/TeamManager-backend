@@ -1,7 +1,6 @@
 ﻿using TeamManager.Common.Core.Exceptions.Abstractions;
-using TeamManager.Core.Shared.Exceptions;
 
-namespace TeamManager.Core.Assignment.Exceptions;
+namespace TeamManager.Core.Shared.Exceptions;
 
 public class MaximumValueException : MethodNotAllowedException
 {

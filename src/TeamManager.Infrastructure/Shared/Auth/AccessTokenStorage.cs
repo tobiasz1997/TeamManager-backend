@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Application.User.DTO;
+using TeamManager.Application.Users.DTO;
 
 namespace TeamManager.Infrastructure.Shared.Auth;
 

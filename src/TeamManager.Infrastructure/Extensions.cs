@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 using TeamManager.Infrastructure.DAL;
 using TeamManager.Infrastructure.Shared.Auth;
 using TeamManager.Infrastructure.Shared.Exceptions;

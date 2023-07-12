@@ -17,9 +17,4 @@
       <PackageReference Include="Scrutor" Version="4.2.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Shared" />
-      <Folder Include="User" />
-    </ItemGroup>
-
 </Project>

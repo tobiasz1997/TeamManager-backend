@@ -3,13 +3,13 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Shouldly;
-using TeamManager.Api.Assignment.Requests;
-using TeamManager.Application.Assignment.DTO;
+using TeamManager.Api.Assignments.Requests;
+using TeamManager.Application.Assignments.DTO;
 using TeamManager.Common.Core.Browsing;
-using TeamManager.Core.Assignment.Models;
+using TeamManager.Core.Assignments.Models;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Enums;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Enums;
+using TeamManager.Core.Users.Models;
 using TeamManager.Infrastructure.Shared.Security;
 using Xunit;
 

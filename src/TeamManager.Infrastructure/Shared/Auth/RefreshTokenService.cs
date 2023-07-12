@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 
 namespace TeamManager.Infrastructure.Shared.Auth;
 

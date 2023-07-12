@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 
 namespace TeamManager.Infrastructure.Shared.Security;
 

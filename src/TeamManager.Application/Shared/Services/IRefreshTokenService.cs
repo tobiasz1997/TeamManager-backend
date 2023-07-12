@@ -1,5 +1,5 @@
 ﻿using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 
 namespace TeamManager.Application.Shared.Services;
 

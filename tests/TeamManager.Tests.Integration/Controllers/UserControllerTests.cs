@@ -2,10 +2,10 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Shouldly;
-using TeamManager.Api.User.Requests;
-using TeamManager.Application.User.DTO;
+using TeamManager.Api.Users.Requests;
+using TeamManager.Application.Users.DTO;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 using TeamManager.Infrastructure.Shared.Security;
 using Xunit;
 

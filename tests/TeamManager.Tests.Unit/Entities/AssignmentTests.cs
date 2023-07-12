@@ -1,7 +1,7 @@
 ﻿using Shouldly;
-using TeamManager.Core.Assignment.Exceptions;
-using TeamManager.Core.Assignment.Models;
-using TeamManager.Core.User.Enums;
+using TeamManager.Core.Assignments.Models;
+using TeamManager.Core.Shared.Exceptions;
+using TeamManager.Core.Users.Enums;
 using Xunit;
 
 namespace TeamManager.Tests.Unit.Entities;
