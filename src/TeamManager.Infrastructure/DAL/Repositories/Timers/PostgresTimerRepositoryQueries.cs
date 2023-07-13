@@ -1,18 +1,29 @@
+using Microsoft.EntityFrameworkCore;
 using TeamManager.Core.Shared.ValueObjects;
 using TeamManager.Core.Timers.Repositories;
 using Timer = TeamManager.Core.Timers.Models.Timer;
 
 namespace TeamManager.Infrastructure.DAL.Repositories.Timers;
 
-public class PostgresTimerRepositoryQueries : ITimerRepositoryQueries
+internal sealed class PostgresTimerRepositoryQueries : ITimerRepositoryQueries
 {
-    public Task<Timer?> GetAsync(Id id)
+    private readonly TeamManagerDbContext _dbContext;
+
+    public PostgresTimerRepositoryQueries(TeamManagerDbContext dbContext)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
     }
 
-    public Task<IEnumerable<Timer>> GetAllAsync(Id userId)
+    public Task<Timer?> GetAsync(Id id) => _dbContext.Timers
+        .AsNoTracking()
+        .SingleOrDefaultAsync(x => x.Id == id);
+
+    public async Task<IEnumerable<Timer>> GetAllAsync(Id userId)
     {
-        throw new NotImplementedException();
+        var result = await _dbContext.Timers
+            .AsNoTracking()
+            .Where(x => x.UserId == userId)
+            .ToListAsync();
+        return result;
     }
 }
