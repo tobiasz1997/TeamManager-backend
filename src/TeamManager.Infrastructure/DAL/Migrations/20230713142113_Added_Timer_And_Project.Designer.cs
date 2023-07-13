@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TeamManager.Infrastructure.DAL;
@@ -11,9 +12,11 @@ using TeamManager.Infrastructure.DAL;
 namespace TeamManager.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(TeamManagerDbContext))]
-    partial class TeamManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713142113_Added_Timer_And_Project")]
+    partial class AddedTimerAndProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

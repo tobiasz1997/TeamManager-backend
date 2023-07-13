@@ -13,7 +13,6 @@ public class TimerConfiguration : IEntityTypeConfiguration<Timer>
     public void Configure(EntityTypeBuilder<Timer> builder)
     {
         builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
-        builder.HasOne<Project>().WithMany().HasForeignKey(x => x.Project);
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
             .HasConversion(x => x.Value, x => new Id(x));
