@@ -23,7 +23,7 @@ public class ProjectController : BaseApiController
         _mediator = mediator;
     }
     
-    [HttpGet()]
+    [HttpGet("list")]
     [SwaggerOperation("Get all projects.")]
     [ProducesResponseType(typeof(IEnumerable<ProjectDto>), StatusCodes.Status200OK)]
     [ProducesResponseType( StatusCodes.Status401Unauthorized)]

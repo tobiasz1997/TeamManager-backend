@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using TeamManager.Api.Timers.Requests;
 using TeamManager.Application.Timers.DTO;
+using TeamManager.Application.Timers.Queries;
 using TeamManager.Common.AspNet.Controller;
 using TeamManager.Common.Core.Browsing;
 using TeamManager.Common.Core.Exceptions.Abstractions;
@@ -22,15 +23,15 @@ public class TimerController : BaseApiController
         _mediator = mediator;
     }
     
-    [HttpGet()]
+    [HttpGet("list")]
     [SwaggerOperation("Get timers list.")]
-    [ProducesResponseType(typeof(PagedResult<TimersDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResult<TimerDto>), StatusCodes.Status200OK)]
     [ProducesResponseType( StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> GetTimersList([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] Guid projectId, [FromQuery] int page = 1, [FromQuery] int pageSize = 2)
+    public async Task<ActionResult> GetTimersList([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] Guid? projectId, [FromQuery] int page = 1, [FromQuery] int pageSize = 2)
     {
         //TODO: try to move queries to object
-        return Ok();
+        return Ok(await _mediator.Send(new GetTimersList {UserId = UserId, EndDate = endDate, Page = page, PageSize = pageSize, ProjectId = projectId, StartDate = startDate}));
     }
     
     [HttpPost]
