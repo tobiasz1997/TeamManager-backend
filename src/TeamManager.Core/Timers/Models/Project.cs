@@ -19,4 +19,11 @@ public class Project
         Color = color;
         CreatedAt = createdAt;
     }
+
+    public void Update(Id id, Label label, Color color)
+    {
+        Id = id;
+        Label = label;
+        Color = color;
+    }
 }

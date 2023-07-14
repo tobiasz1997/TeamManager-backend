@@ -19,6 +19,7 @@ internal sealed class PostgresProjectRepositoryQueries : IProjectRepositoryQueri
         var result = await _dbContext.Projects
             .AsNoTracking()
             .Where(x => x.UserId == userId)
+            .OrderBy(x => x.Label)
             .ToListAsync();
         return result;
     }
