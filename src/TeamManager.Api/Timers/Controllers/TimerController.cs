@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using TeamManager.Api.Timers.Requests;
+using TeamManager.Application.Timers.Commands;
 using TeamManager.Application.Timers.DTO;
 using TeamManager.Application.Timers.Queries;
 using TeamManager.Common.AspNet.Controller;
@@ -38,10 +39,11 @@ public class TimerController : BaseApiController
     [SwaggerOperation("Create timer.")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
     [ProducesResponseType( StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult> CreateTimer(CreateTimerRequest command)
     {
         var newId = Guid.NewGuid();
+        await _mediator.Send(new CreateTimer(newId, UserId, command.ProjectId, command.Description, command.Date));
         return Ok(newId);
     }
     
@@ -50,9 +52,10 @@ public class TimerController : BaseApiController
     [ProducesResponseType( StatusCodes.Status200OK)]
     [ProducesResponseType( StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult> UpdateTimer(UpdateTimerRequest command)
     {
-        return Ok();
+        return Ok(await _mediator.Send(new UpdateTimer(command.Id, command.ProjectId, command.Description, command.Date)));
     }
     
     [HttpDelete("{id:guid}")]
@@ -62,6 +65,6 @@ public class TimerController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteTimer(Guid id)
     {
-        return Ok();
+        return Ok(await _mediator.Send(new DeleteTimer(id)));
     }
 }
