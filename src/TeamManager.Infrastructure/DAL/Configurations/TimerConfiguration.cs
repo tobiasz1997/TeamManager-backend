@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.Timers.Models;
 using TeamManager.Core.Timers.ValueObjects;
 using TeamManager.Core.Users.Models;
 using Timer = TeamManager.Core.Timers.Models.Timer;

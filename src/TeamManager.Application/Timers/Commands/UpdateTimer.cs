@@ -1,4 +1,4 @@
-using TeamManager.Common.MediatR.Commands;
+using Mediator;
 
 namespace TeamManager.Application.Timers.Commands;
 

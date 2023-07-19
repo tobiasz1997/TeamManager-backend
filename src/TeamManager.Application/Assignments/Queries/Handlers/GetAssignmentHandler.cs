@@ -1,11 +1,11 @@
-﻿using TeamManager.Application.Assignments.DTO;
+﻿using Mediator;
+using TeamManager.Application.Assignments.DTO;
 using TeamManager.Application.Assignments.Exceptions;
-using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.Assignments.Repositories;
 
 namespace TeamManager.Application.Assignments.Queries.Handlers;
 
-public sealed class GetAssignmentHandler : IQueryHandler<GetAssignment, AssignmentDto>
+public sealed class GetAssignmentHandler : IRequestHandler<GetAssignment, AssignmentDto>
 {
     private readonly IAssignmentRepositoryQueries _assignmentRepository;
     
@@ -14,7 +14,7 @@ public sealed class GetAssignmentHandler : IQueryHandler<GetAssignment, Assignme
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task<AssignmentDto> Handle(GetAssignment request, CancellationToken cancellationToken)
+    public async ValueTask<AssignmentDto> Handle(GetAssignment request, CancellationToken cancellationToken)
     {
         var result = await _assignmentRepository.GetAsync(request.Id);
         

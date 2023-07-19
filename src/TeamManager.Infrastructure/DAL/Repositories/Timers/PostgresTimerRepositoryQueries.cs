@@ -26,8 +26,7 @@ internal sealed class PostgresTimerRepositoryQueries : ITimerRepositoryQueries
             .Where(x => projectId == null || x.ProjectId == projectId)
             .Where(x => startDate == null || x.Date <= startDate)
             .Where(x => endDate == null || x.Date >= endDate)
-            .OrderByDescending(x => x.Date.Date)
-            .ThenBy(x => x.Date.TimeOfDay)
+            .OrderByDescending(x => x.Date)
             .ToListAsync();
         return result;
     }

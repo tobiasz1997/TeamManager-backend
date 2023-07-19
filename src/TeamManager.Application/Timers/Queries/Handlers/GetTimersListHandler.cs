@@ -1,12 +1,12 @@
+using Mediator;
 using TeamManager.Application.Timers.DTO;
 using TeamManager.Application.Timers.Mappers;
 using TeamManager.Common.Core.Browsing;
-using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.Timers.Repositories;
 
 namespace TeamManager.Application.Timers.Queries.Handlers;
 
-public class GetTimersListHandler : IQueryHandler<GetTimersList, PagedResult<TimerDto>>
+public class GetTimersListHandler : IRequestHandler<GetTimersList, PagedResult<TimerDto>>
 {
     private readonly ITimerRepositoryQueries _timerRepository;
     private readonly IProjectRepositoryQueries _projectRepository;
@@ -17,7 +17,7 @@ public class GetTimersListHandler : IQueryHandler<GetTimersList, PagedResult<Tim
         _projectRepository = projectRepository;
     }
 
-    public async Task<PagedResult<TimerDto>> Handle(GetTimersList request, CancellationToken cancellationToken)
+    public async ValueTask<PagedResult<TimerDto>> Handle(GetTimersList request, CancellationToken cancellationToken)
     {
         var projects = await _projectRepository.GetAllAsync(request.UserId);
         var timers = await _timerRepository

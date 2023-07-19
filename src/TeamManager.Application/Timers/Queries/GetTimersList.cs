@@ -1,10 +1,10 @@
+using Mediator;
 using TeamManager.Application.Timers.DTO;
 using TeamManager.Common.Core.Browsing;
-using TeamManager.Common.MediatR.Queries;
 
 namespace TeamManager.Application.Timers.Queries;
 
-public class GetTimersList : IQuery<PagedResult<TimerDto>>
+public class GetTimersList : IRequest<PagedResult<TimerDto>>
 {
     public Guid UserId { get; init; }
     public Guid? ProjectId { get; init; }

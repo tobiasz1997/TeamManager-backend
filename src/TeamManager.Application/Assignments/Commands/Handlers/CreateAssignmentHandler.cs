@@ -1,6 +1,5 @@
-﻿using MediatR;
+﻿using Mediator;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Assignments.Models;
 using TeamManager.Core.Assignments.Repositories;
 
@@ -17,7 +16,7 @@ public sealed class CreateAssignmentHandler : ICommandHandler<CreateAssignment>
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task<Unit> Handle(CreateAssignment request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(CreateAssignment request, CancellationToken cancellationToken)
     {
         var newAssignment = new Assignment(request.Id, request.UserId, request.Name, request.Description, request.Priority, request.Status, _clock.Current());
         await _assignmentRepository.CreateAsync(newAssignment);

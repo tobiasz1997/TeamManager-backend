@@ -1,6 +1,5 @@
-using MediatR;
+using Mediator;
 using TeamManager.Application.Timers.Exceptions;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Timers.Repositories;
 
 namespace TeamManager.Application.Timers.Commands.Handlers;
@@ -14,7 +13,7 @@ public class DeleteProjectHandler : ICommandHandler<DeleteProject>
         _projectRepository = projectRepository;
     }
 
-    public async Task<Unit> Handle(DeleteProject request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(DeleteProject request, CancellationToken cancellationToken)
     {
         var result = await _projectRepository.GetAsync(request.Id);
         

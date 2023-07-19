@@ -1,11 +1,11 @@
-﻿using TeamManager.Application.Users.DTO;
+﻿using Mediator;
+using TeamManager.Application.Users.DTO;
 using TeamManager.Application.Users.Exceptions;
-using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.Users.Repositories;
 
 namespace TeamManager.Application.Users.Queries.Handlers;
 
-public class GetUserHandler :IQueryHandler<GetUser, UserDto>
+public class GetUserHandler : IRequestHandler<GetUser, UserDto>
 {
     private readonly IUserRepositoryQueries _userRepositoryQueries;
 
@@ -14,7 +14,7 @@ public class GetUserHandler :IQueryHandler<GetUser, UserDto>
         _userRepositoryQueries = userRepositoryQueries;
     }
 
-    public async Task<UserDto> Handle(GetUser request, CancellationToken cancellationToken)
+    public async ValueTask<UserDto> Handle(GetUser request, CancellationToken cancellationToken)
     {
         var user = await _userRepositoryQueries.GetByIdAsync(request.UserId);
 

@@ -1,4 +1,4 @@
-﻿using TeamManager.Common.MediatR.Commands;
+﻿using Mediator;
 using TeamManager.Core.Users.Enums;
 
 namespace TeamManager.Application.Assignments.Commands;

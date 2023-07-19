@@ -4,7 +4,6 @@ using TeamManager.Core.Shared.ValueObjects;
 using TeamManager.Core.Timers.Models;
 using TeamManager.Core.Timers.ValueObjects;
 using TeamManager.Core.Users.Models;
-using TeamManager.Core.Users.ValueObjects;
 
 namespace TeamManager.Infrastructure.DAL.Configurations;
 

@@ -1,8 +1,7 @@
-﻿using MediatR;
+﻿using Mediator;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Application.Users.DTO;
 using TeamManager.Application.Users.Exceptions;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Users.Repositories;
 
 namespace TeamManager.Application.Users.Commands.Handlers;
@@ -32,7 +31,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
         _jwtService = jwtService;
     }
 
-    public async Task<Unit> Handle(SignIn request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(SignIn request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByEmailAsync(request.Email);
         if (user is null)

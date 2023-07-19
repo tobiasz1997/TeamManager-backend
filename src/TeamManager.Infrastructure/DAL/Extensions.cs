@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Mediator;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Assignments.Repositories;
 using TeamManager.Core.Timers.Repositories;
 using TeamManager.Core.Users.Repositories;
-using TeamManager.Infrastructure.DAL.Decorators;
 using TeamManager.Infrastructure.DAL.Repositories.Assignments;
 using TeamManager.Infrastructure.DAL.Repositories.Timers;
 using TeamManager.Infrastructure.DAL.Repositories.Users;
+using TeamManager.Infrastructure.DAL.UnitOfWorks;
 
 namespace TeamManager.Infrastructure.DAL;
 
@@ -31,9 +31,10 @@ internal static class Extensions
         service.AddScoped<IProjectRepositoryQueries, PostgresProjectRepositoryQueries>();
         service.AddScoped<ITimerRepositoryCommands, PostgresTimerRepositoryCommands>();
         service.AddScoped<ITimerRepositoryQueries, PostgresTimerRepositoryQueries>();
-        service.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
-        service.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
+        service.AddScoped(typeof(IPipelineBehavior<,>), typeof(PostgresUnitOfWork<,>));
         service.AddHostedService<DatabaseInitializer>();
+        
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         return service;
     }

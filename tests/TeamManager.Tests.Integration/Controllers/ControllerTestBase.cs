@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Infrastructure;
 using TeamManager.Infrastructure.Shared.Auth;
 using TeamManager.Infrastructure.Shared.Time;
 using Xunit;

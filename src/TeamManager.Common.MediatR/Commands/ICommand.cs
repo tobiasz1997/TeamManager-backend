@@ -1,8 +1,8 @@
-using MediatR;
-
-namespace TeamManager.Common.MediatR.Commands;
-
-//Marker interface
-public interface ICommand : IRequest
-{
-}
+// using MediatR;
+//
+// namespace TeamManager.Common.MediatR.Commands;
+//
+// //Marker interface
+// public interface ICommand : IRequest
+// {
+// }

@@ -1,9 +1,9 @@
-﻿using TeamManager.Application.Assignments.DTO;
-using TeamManager.Common.MediatR.Queries;
+﻿using Mediator;
+using TeamManager.Application.Assignments.DTO;
 
 namespace TeamManager.Application.Assignments.Queries;
 
-public class GetAssignmentsLists : IQuery<AssignmentsListsDto>
+public class GetAssignmentsLists : IRequest<AssignmentsListsDto>
 {
     public Guid UserId { get; init; }
     public int PageSize { get; init; }

@@ -10,12 +10,12 @@ public class Label
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new EmptyValueException(nameof(Label));
+            throw new EmptyValueException("Label");
         }
 
         if (value.Length > 50)
         {
-            throw new TooLongValueException(nameof(Label), value.Length, 50);
+            throw new TooLongValueException("Label", value.Length, 50);
         }
 
         Value = value;

@@ -1,13 +1,13 @@
-﻿using TeamManager.Application.Assignments.DTO;
+﻿using Mediator;
+using TeamManager.Application.Assignments.DTO;
 using TeamManager.Common.Core.Browsing;
-using TeamManager.Common.MediatR.Queries;
 using TeamManager.Core.Assignments.Repositories;
 using TeamManager.Core.Shared.ValueObjects;
 using TeamManager.Core.Users.Enums;
 
 namespace TeamManager.Application.Assignments.Queries.Handlers;
 
-public sealed class GetAssignmentsListsHandler : IQueryHandler<GetAssignmentsLists, AssignmentsListsDto>
+public sealed class GetAssignmentsListsHandler : IRequestHandler<GetAssignmentsLists, AssignmentsListsDto>
 {
     private readonly IAssignmentRepositoryQueries _assignmentRepository;
     
@@ -16,7 +16,7 @@ public sealed class GetAssignmentsListsHandler : IQueryHandler<GetAssignmentsLis
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task<AssignmentsListsDto> Handle(GetAssignmentsLists request, CancellationToken cancellationToken)
+    public async ValueTask<AssignmentsListsDto> Handle(GetAssignmentsLists request, CancellationToken cancellationToken)
     {
         var assignments = await _assignmentRepository.GetAllAsync();
         var filteredAssignments = assignments.Where(x => x.UserId == new Id(request.UserId)).OrderBy(x => x.StartDate).Select(x => new AssignmentDto()

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Serilog;
 using TeamManager.Application;
-using TeamManager.Common.MediatR;
+using TeamManager.Common.AspNet.BehaviourOptions;
 using TeamManager.Core;
 using TeamManager.Infrastructure;
 using TeamManger.Common.Extensions.Serilog;
@@ -11,8 +11,8 @@ builder.Services
     .AddCore()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
-    .AddMediatrExtension()
     .AddControllers()
+    .AddBehaviourOptionsExtension()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

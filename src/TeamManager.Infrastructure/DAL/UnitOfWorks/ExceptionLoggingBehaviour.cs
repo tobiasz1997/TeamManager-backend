@@ -1,32 +1,26 @@
-﻿using Humanizer;
+using Humanizer;
+using Mediator;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using TeamManager.Common.Core.Exceptions.Abstractions;
 
-namespace TeamManager.Infrastructure.Shared.Exceptions;
+namespace TeamManager.Infrastructure.DAL.UnitOfWorks;
 
-internal sealed class ExceptionMiddleware : IMiddleware
+public class ExceptionLoggingBehaviour<TMessage, TResponse> : MessageExceptionHandler<TMessage, TResponse>
+    where TMessage : notnull, IMessage
 {
-    private readonly ILogger<ExceptionMiddleware> _logger;
+    private readonly ILogger<ExceptionLoggingBehaviour<TMessage, TResponse>> _logger;
 
-    public ExceptionMiddleware(ILogger<ExceptionMiddleware> logger)
+    public ExceptionLoggingBehaviour(ILogger<ExceptionLoggingBehaviour<TMessage, TResponse>> logger)
     {
         _logger = logger;
     }
-    
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
-    {
-        try
-        {
-            await next(context);
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError(exception, exception.Message);
-            await HandleExceptionAsync(exception, context);
-        }
-    }
 
+    protected override ValueTask<ExceptionHandlingResult<TResponse>> Handle(TMessage message, Exception exception, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+    
     private static async Task HandleExceptionAsync(Exception exception, HttpContext context)
     {
         var (statusCode, error) = exception switch

@@ -15,7 +15,7 @@ public class Color
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new EmptyValueException(nameof(Color));
+            throw new EmptyValueException("Color");
         }
 
         if (!Regex.IsMatch(value))

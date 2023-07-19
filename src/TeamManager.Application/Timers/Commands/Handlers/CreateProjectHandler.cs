@@ -1,6 +1,5 @@
-using MediatR;
+using Mediator;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Timers.Models;
 using TeamManager.Core.Timers.Repositories;
 
@@ -17,7 +16,7 @@ public class CreateProjectHandler : ICommandHandler<CreateProject>
         _projectRepository = projectRepository;
     }
 
-    public async Task<Unit> Handle(CreateProject request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(CreateProject request, CancellationToken cancellationToken)
     {
         var newProject = new Project(request.Id, request.UserId, request.Label, request.Color, _clock.Current());
         await _projectRepository.CreateAsync(newProject);

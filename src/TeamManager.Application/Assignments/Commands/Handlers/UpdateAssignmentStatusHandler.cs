@@ -1,6 +1,5 @@
-﻿using MediatR;
+﻿using Mediator;
 using TeamManager.Application.Assignments.Exceptions;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Assignments.Repositories;
 
 namespace TeamManager.Application.Assignments.Commands.Handlers;
@@ -14,7 +13,7 @@ public sealed class UpdateAssignmentStatusHandler : ICommandHandler<UpdateAssign
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task<Unit> Handle(UpdateAssignmentStatus request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(UpdateAssignmentStatus request, CancellationToken cancellationToken)
     {
         var result = await _assignmentRepository.GetAsync(request.Id);
         

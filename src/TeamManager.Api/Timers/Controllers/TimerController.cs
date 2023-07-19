@@ -1,4 +1,4 @@
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -55,7 +55,8 @@ public class TimerController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult> UpdateTimer(UpdateTimerRequest command)
     {
-        return Ok(await _mediator.Send(new UpdateTimer(command.Id, command.ProjectId, command.Description, command.Date)));
+        await _mediator.Send(new UpdateTimer(command.Id, command.ProjectId, command.Description, command.Date));
+        return Ok();
     }
     
     [HttpDelete("{id:guid}")]
@@ -65,6 +66,7 @@ public class TimerController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteTimer(Guid id)
     {
-        return Ok(await _mediator.Send(new DeleteTimer(id)));
+        await _mediator.Send(new DeleteTimer(id));
+        return Ok();
     }
 }

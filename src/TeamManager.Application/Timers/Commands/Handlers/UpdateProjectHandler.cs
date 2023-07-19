@@ -1,6 +1,5 @@
-using MediatR;
+using Mediator;
 using TeamManager.Application.Timers.Exceptions;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Timers.Repositories;
 
 namespace TeamManager.Application.Timers.Commands.Handlers;
@@ -14,7 +13,7 @@ public class UpdateProjectHandler : ICommandHandler<UpdateProject>
         _projectRepository = projectRepository;
     }
 
-    public async Task<Unit> Handle(UpdateProject request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(UpdateProject request, CancellationToken cancellationToken)
     {
         var result = await _projectRepository.GetAsync(request.Id);
         

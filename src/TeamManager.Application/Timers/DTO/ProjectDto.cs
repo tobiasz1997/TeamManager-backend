@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using TeamManager.Core.Timers.Models;
 
 namespace TeamManager.Application.Timers.DTO;
 

@@ -1,4 +1,4 @@
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -52,7 +52,8 @@ public class ProjectController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult> UpdateProject(UpdateProjectRequest command)
     {
-        return Ok(await _mediator.Send(new UpdateProject(command.Id, command.Label, command.Color)));
+        await _mediator.Send(new UpdateProject(command.Id, command.Label, command.Color));
+        return Ok();
     }
     
     [HttpDelete("{id:guid}")]
@@ -62,6 +63,7 @@ public class ProjectController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteProject(Guid id)
     {
-        return Ok(await _mediator.Send(new DeleteProject(id)));
+        await _mediator.Send(new DeleteProject(id));
+        return Ok();
     }
 }

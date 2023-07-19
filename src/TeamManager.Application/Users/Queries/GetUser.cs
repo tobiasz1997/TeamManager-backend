@@ -1,9 +1,9 @@
-﻿using TeamManager.Application.Users.DTO;
-using TeamManager.Common.MediatR.Queries;
+﻿using Mediator;
+using TeamManager.Application.Users.DTO;
 
 namespace TeamManager.Application.Users.Queries;
 
-public class GetUser : IQuery<UserDto>
+public class GetUser : IRequest<UserDto>
 {
     public Guid UserId { get; init; }
 }

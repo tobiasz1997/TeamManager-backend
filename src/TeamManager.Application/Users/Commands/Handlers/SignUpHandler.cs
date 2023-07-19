@@ -1,8 +1,7 @@
-﻿using MediatR;
+﻿using Mediator;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Application.Users.DTO;
 using TeamManager.Application.Users.Exceptions;
-using TeamManager.Common.MediatR.Commands;
 using TeamManager.Core.Users.Models;
 using TeamManager.Core.Users.Repositories;
 using TeamManager.Core.Users.ValueObjects;
@@ -30,7 +29,7 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
         _refreshTokenRepository = refreshTokenRepository;
     }
 
-    public async Task<Unit> Handle(SignUp request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(SignUp request, CancellationToken cancellationToken)
     {
         if (await _userRepository.GetByEmailAsync(new Email(request.Email)) is not null)
         {
