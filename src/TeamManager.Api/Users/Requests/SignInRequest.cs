@@ -6,7 +6,7 @@ public class SignInRequest
 {
 
     [property: Required] 
-    public string Email { get; init; }
+    public string Email { get; init; } = string.Empty;
     [property: Required] 
-    public string Password { get; init; }
+    public string Password { get; init; } = string.Empty;
 };

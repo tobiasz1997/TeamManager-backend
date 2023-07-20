@@ -43,6 +43,7 @@ public static class Extensions
         return app;
     }
     
+    //TODO: move to core
     public static T GetOptions<T>(this IConfiguration configuration, string sectionName) where T : class, new()
     {
         var options = new T();

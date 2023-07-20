@@ -8,9 +8,9 @@ public class AssignmentDto
     [property: Required]
     public Guid Id { get; set; }
     [property: Required]
-    public string Name { get;  set; }
+    public string Name { get;  set; } = string.Empty;
     [property: Required]
-    public string Description { get;  set; }
+    public string Description { get;  set; } = string.Empty;
     [property: Required]
     public int Priority { get;  set; }
     [property: Required]

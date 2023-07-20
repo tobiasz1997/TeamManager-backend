@@ -1,6 +1,7 @@
 ﻿using Mediator;
 using TeamManager.Application.Assignments.DTO;
 using TeamManager.Application.Assignments.Exceptions;
+using TeamManager.Application.Assignments.Mappers;
 using TeamManager.Core.Assignments.Repositories;
 
 namespace TeamManager.Application.Assignments.Queries.Handlers;
@@ -23,14 +24,6 @@ public sealed class GetAssignmentHandler : IRequestHandler<GetAssignment, Assign
             throw new AssignmentNotFoundException(request.Id);
         }
 
-        return new AssignmentDto()
-        {
-            Id = result.Id,
-            Name = result.Name,
-            Description = result.Description,
-            Priority = result.Priority,
-            Status = result.Status,
-            StartDate = result.StartDate
-        };
+        return result.AsDto();
     }
 }

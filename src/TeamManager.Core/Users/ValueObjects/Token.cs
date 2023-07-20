@@ -11,7 +11,7 @@ public sealed record Token
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new EmptyValueException("Token");
+            throw new EmptyValueException(nameof(Token));
         }
 
         Value = value;

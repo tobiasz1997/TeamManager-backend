@@ -26,11 +26,6 @@ internal sealed class RefreshTokenService : IRefreshTokenService
         return newToken;
     }
 
-    public Task<RefreshToken> CreateOrRefresh(Id userId)
-    {
-        throw new NotImplementedException();
-    }
-
     public RefreshToken Refresh(RefreshToken token)
     {
         var newDate = _clock.Current().AddDays(_refreshTokenExpiry);

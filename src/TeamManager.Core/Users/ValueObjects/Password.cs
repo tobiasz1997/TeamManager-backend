@@ -10,7 +10,7 @@ public sealed record Password
     {
         if (string.IsNullOrWhiteSpace(value) || value.Length is > 200 or < 6)
         {
-            throw new EmptyValueException("Password");
+            throw new EmptyValueException(nameof(Password));
         }
 
         Value = value;

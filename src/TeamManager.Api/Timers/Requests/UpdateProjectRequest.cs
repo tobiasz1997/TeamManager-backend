@@ -7,7 +7,7 @@ public class UpdateProjectRequest
     [property: Required] 
     public Guid Id { get; init; }
     [property: Required] 
-    public string Label { get; init; } = null!;
+    public string Label { get; init; } = string.Empty;
     [property: Required] 
-    public string Color { get; init; } = null!;
+    public string Color { get; init; } = string.Empty;
 }

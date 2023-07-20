@@ -10,7 +10,7 @@ public sealed record Id
     {
         if (value == Guid.Empty)
         {
-            throw new EmptyValueException("Id");
+            throw new EmptyValueException(nameof(Id));
         }
 
         Value = value;

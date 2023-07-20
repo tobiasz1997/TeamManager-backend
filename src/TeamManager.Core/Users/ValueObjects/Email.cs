@@ -17,7 +17,7 @@ public sealed record Email
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new EmptyValueException("Email");
+            throw new EmptyValueException(nameof(Email));
         }
 
         value = value.ToLowerInvariant();

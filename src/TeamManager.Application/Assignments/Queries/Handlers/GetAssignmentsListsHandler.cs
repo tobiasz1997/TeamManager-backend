@@ -1,5 +1,6 @@
 ﻿using Mediator;
 using TeamManager.Application.Assignments.DTO;
+using TeamManager.Application.Assignments.Mappers;
 using TeamManager.Common.Core.Browsing;
 using TeamManager.Core.Assignments.Repositories;
 using TeamManager.Core.Shared.ValueObjects;
@@ -18,25 +19,19 @@ public sealed class GetAssignmentsListsHandler : IRequestHandler<GetAssignmentsL
 
     public async ValueTask<AssignmentsListsDto> Handle(GetAssignmentsLists request, CancellationToken cancellationToken)
     {
-        var assignments = await _assignmentRepository.GetAllAsync();
-        var filteredAssignments = assignments.Where(x => x.UserId == new Id(request.UserId)).OrderBy(x => x.StartDate).Select(x => new AssignmentDto()
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Description = x.Description,
-            Priority = x.Priority,
-            Status = x.Status,
-            StartDate = x.StartDate
-        }).ToList();
+        var assignments = await _assignmentRepository.GetAllAsync(request.UserId);
+        var mappedAssignments = assignments
+            .Select(x => x.AsDto())
+            .ToList();
 
         var todoAssignments =
-            filteredAssignments.Where(x => x.Status == AssignmentStatusType.ToDo).ToList();
+            mappedAssignments.Where(x => x.Status == AssignmentStatusType.ToDo).ToList();
         var inProgressAssignments =
-            filteredAssignments.Where(x => x.Status == AssignmentStatusType.InProgress).ToList();
+            mappedAssignments.Where(x => x.Status == AssignmentStatusType.InProgress).ToList();
         var doneAssignments =
-            filteredAssignments.Where(x => x.Status == AssignmentStatusType.Done).ToList();
+            mappedAssignments.Where(x => x.Status == AssignmentStatusType.Done).ToList();
         var abortedAssignments =
-            filteredAssignments.Where(x => x.Status == AssignmentStatusType.Aborted).ToList();
+            mappedAssignments.Where(x => x.Status == AssignmentStatusType.Aborted).ToList();
 
         var results = new AssignmentsListsDto
         {

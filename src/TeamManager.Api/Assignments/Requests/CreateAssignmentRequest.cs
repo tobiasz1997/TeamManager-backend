@@ -6,9 +6,9 @@ namespace TeamManager.Api.Assignments.Requests;
 public class CreateAssignmentRequest
 {
     [property: Required] 
-    public string Name { get; init; }
+    public string Name { get; init; } = string.Empty;
     [property: Required] 
-    public string Description { get; init; }
+    public string Description { get; init; } = string.Empty;
     [property: Required] 
     public int Priority { get; set; }
     [property: Required]
