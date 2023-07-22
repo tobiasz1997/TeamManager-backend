@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeamManager.Application.Shared.Services;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 using TeamManager.Infrastructure.DAL;
 using TeamManager.Infrastructure.Shared.Auth;
-using TeamManager.Infrastructure.Shared.Exceptions;
+using TeamManager.Infrastructure.Shared.Middlewares;
 using TeamManager.Infrastructure.Shared.Security;
 using TeamManager.Infrastructure.Shared.Time;
 using TeamManger.Common.Extensions.Swagger;
@@ -18,6 +18,7 @@ public static class Extensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
+            .AddSingleton<LoggingMiddleware>()
             .AddSingleton<ExceptionMiddleware>()
             .AddPostgres(configuration)
             .AddSingleton<IClock, Clock>()
@@ -33,6 +34,7 @@ public static class Extensions
 
     public static WebApplication UseInfrastructure(this WebApplication app)
     {
+        app.UseMiddleware<LoggingMiddleware>();
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseSwaggerExtension();
         app.UseAuthentication();
@@ -41,6 +43,7 @@ public static class Extensions
         return app;
     }
     
+    //TODO: move to core
     public static T GetOptions<T>(this IConfiguration configuration, string sectionName) where T : class, new()
     {
         var options = new T();

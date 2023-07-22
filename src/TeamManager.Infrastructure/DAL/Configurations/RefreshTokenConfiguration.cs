@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Models;
-using TeamManager.Core.User.ValueObjects;
+using TeamManager.Core.Users.Models;
+using TeamManager.Core.Users.ValueObjects;
 
 namespace TeamManager.Infrastructure.DAL.Configurations;
 

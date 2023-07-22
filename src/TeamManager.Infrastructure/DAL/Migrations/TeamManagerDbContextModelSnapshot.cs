@@ -22,7 +22,7 @@ namespace TeamManager.Infrastructure.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TeamManager.Core.Assignment.Models.Assignment", b =>
+            modelBuilder.Entity("TeamManager.Core.Assignments.Models.Assignment", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -52,7 +52,61 @@ namespace TeamManager.Infrastructure.DAL.Migrations
                     b.ToTable("Assignments");
                 });
 
-            modelBuilder.Entity("TeamManager.Core.User.Models.RefreshToken", b =>
+            modelBuilder.Entity("TeamManager.Core.Timers.Models.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("TeamManager.Core.Timers.Models.Timer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Timers");
+                });
+
+            modelBuilder.Entity("TeamManager.Core.Users.Models.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -78,7 +132,7 @@ namespace TeamManager.Infrastructure.DAL.Migrations
                     b.ToTable("RefreshToken");
                 });
 
-            modelBuilder.Entity("TeamManager.Core.User.Models.User", b =>
+            modelBuilder.Entity("TeamManager.Core.Users.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -108,6 +162,24 @@ namespace TeamManager.Infrastructure.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("TeamManager.Core.Timers.Models.Project", b =>
+                {
+                    b.HasOne("TeamManager.Core.Users.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeamManager.Core.Timers.Models.Timer", b =>
+                {
+                    b.HasOne("TeamManager.Core.Users.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

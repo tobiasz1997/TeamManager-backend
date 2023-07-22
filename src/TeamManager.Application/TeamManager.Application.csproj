@@ -8,18 +8,17 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TeamManager.Common.AspNet\TeamManager.Common.AspNet.csproj" />
-      <ProjectReference Include="..\TeamManager.Common.MediatR\TeamManager.Common.MediatR.csproj" />
       <ProjectReference Include="..\TeamManager.Core\TeamManager.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Mediator.Abstractions" Version="3.0.0-preview.6" />
+      <PackageReference Include="Mediator.SourceGenerator" Version="3.0.0-preview.6">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
       <PackageReference Include="Scrutor" Version="4.2.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Shared" />
-      <Folder Include="User" />
     </ItemGroup>
 
 </Project>

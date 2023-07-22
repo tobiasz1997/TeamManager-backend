@@ -1,4 +1,4 @@
-﻿using TeamManager.Application.User.DTO;
+﻿using TeamManager.Application.Users.DTO;
 
 namespace TeamManager.Application.Shared.Services;
 

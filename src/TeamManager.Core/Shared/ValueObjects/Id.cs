@@ -4,14 +4,13 @@ namespace TeamManager.Core.Shared.ValueObjects;
 
 public sealed record Id
 {
-
     public Guid Value { get; }
 
     public Id(Guid value)
     {
         if (value == Guid.Empty)
         {
-            throw new EmptyValueException("Id");
+            throw new EmptyValueException(nameof(Id));
         }
 
         Value = value;

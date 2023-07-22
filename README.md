@@ -36,3 +36,15 @@ You can add flag *-d* to run containers in background
 - Swagger
 - Seq
 - pgAdmin
+
+---
+
+### Migration
+
+To make a migration, you have to:
+
+```bash
+cd src/TeamManager.Infrastructure
+
+dotnet ef migrations add Name_Of_Migration -o ./DAL/Migrations --startup-project ../TeamManager.Api
+```

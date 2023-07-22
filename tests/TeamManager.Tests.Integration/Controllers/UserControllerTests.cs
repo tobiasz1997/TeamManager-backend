@@ -1,12 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Identity;
 using Shouldly;
-using TeamManager.Api.User.Requests;
-using TeamManager.Application.User.DTO;
+using TeamManager.Api.Users.Requests;
+using TeamManager.Application.Users.DTO;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Models;
-using TeamManager.Infrastructure.Shared.Security;
+using TeamManager.Tests.Integration.Shared;
 using Xunit;
 
 namespace TeamManager.Tests.Integration.Controllers;
@@ -14,6 +12,7 @@ namespace TeamManager.Tests.Integration.Controllers;
 public class UserControllerTests : ControllerTestBase, IDisposable
 {
    private readonly TestDatabase _testDatabase;
+   private const string RequestUrl = "user";
 
    public UserControllerTests(OptionsProvider optionsProvider) : base(optionsProvider)
    {
@@ -31,7 +30,7 @@ public class UserControllerTests : ControllerTestBase, IDisposable
       var command = new SignUpRequest()
          { Email = "grzeg1@vp.pl", Password = "SECRET", FirstName = "Jan", LastName = "Kowalski" };
 
-      var response = await Client.PostAsJsonAsync("user/sign-up", command);
+      var response = await Client.PostAsJsonAsync($"{RequestUrl}/sign-up", command);
       
       response.StatusCode.ShouldBe(HttpStatusCode.OK);
       var token = await response.Content.ReadFromJsonAsync<AuthResultDto>();
@@ -48,10 +47,10 @@ public class UserControllerTests : ControllerTestBase, IDisposable
       const string email = "grzeg11@wp.pl";
       const string password = "hardPassword123";
       
-      await CreateUser(email, password);
+      await CreateModels.CreateUser(_testDatabase, email, password);
 
       var command = new SignInRequest() { Email = email, Password = password};
-      var response = await Client.PostAsJsonAsync("user/sign-in", command);
+      var response = await Client.PostAsJsonAsync($"{RequestUrl}/sign-in", command);
       
       response.StatusCode.ShouldBe(HttpStatusCode.OK);
       var token = await response.Content.ReadFromJsonAsync<AuthResultDto>();
@@ -68,10 +67,10 @@ public class UserControllerTests : ControllerTestBase, IDisposable
       const string email = "grzeg11@wp.pl";
       const string password = "hardPassword123";
       
-      var user = await CreateUser(email, password);
+      var user = await CreateModels.CreateUser(_testDatabase, email, password);
       Authorize(user.Id, user.Email);
 
-      var userDto = await Client.GetFromJsonAsync<UserDto>("user/me");
+      var userDto = await Client.GetFromJsonAsync<UserDto>($"{RequestUrl}/me");
 
       userDto.ShouldNotBeNull();
       userDto.Id.ShouldBe(user.Id.Value);
@@ -86,7 +85,7 @@ public class UserControllerTests : ControllerTestBase, IDisposable
       var token = await CreateRefreshToken();
 
       var command = new RefreshTokenRequest() { RefreshToken = token};
-      var response = await Client.PostAsJsonAsync("user/token/refresh", command);
+      var response = await Client.PostAsJsonAsync($"{RequestUrl}/token/refresh", command);
 
       response.StatusCode.ShouldBe(HttpStatusCode.OK);
       var tokenResponse = await response.Content.ReadFromJsonAsync<AuthResultDto>();
@@ -98,26 +97,11 @@ public class UserControllerTests : ControllerTestBase, IDisposable
       tokenResponse.RefreshToken.ShouldBe(token);
    }
 
-   private async Task<User> CreateUser(string email, string password)
-   {
-      var passwordService = new PasswordService(new PasswordHasher<User>());
-      var user = new User(Guid.NewGuid(), email, passwordService.Secure(password), "Jan", "Kowalski", DateTime.UtcNow);
-
-      await _testDatabase.DbContext.User.AddAsync(user);
-      await _testDatabase.DbContext.SaveChangesAsync();
-
-      return user;
-   }
-   
    private async Task<string> CreateRefreshToken()
    {
-      const string email = "grzeg11@wp.pl";
-      const string password = "hardPassword123";
-      var passwordService = new PasswordService(new PasswordHasher<User>());
-      var user = new User(Guid.NewGuid(), email, passwordService.Secure(password), "Jan", "Kowalski", DateTime.UtcNow);
-      var token = refreshTokenService.Create(new Id(user.Id.Value));
-
-      await _testDatabase.DbContext.User.AddAsync(user);
+      var user = await CreateModels.CreateUser(_testDatabase);
+      var token = RefreshTokenService.Create(new Id(user.Id.Value));
+      
       await _testDatabase.DbContext.RefreshToken.AddAsync(token);
       await _testDatabase.DbContext.SaveChangesAsync();
       return token.Token.Value;

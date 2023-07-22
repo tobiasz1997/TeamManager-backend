@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using TeamManager.Application.Shared.Services;
 using TeamManager.Core.Shared.ValueObjects;
-using TeamManager.Core.User.Models;
+using TeamManager.Core.Users.Models;
 
 namespace TeamManager.Infrastructure.Shared.Auth;
 
@@ -24,11 +24,6 @@ internal sealed class RefreshTokenService : IRefreshTokenService
             _clock.Current().AddDays(_refreshTokenExpiry));
         
         return newToken;
-    }
-
-    public Task<RefreshToken> CreateOrRefresh(Id userId)
-    {
-        throw new NotImplementedException();
     }
 
     public RefreshToken Refresh(RefreshToken token)
