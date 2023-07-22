@@ -6,13 +6,13 @@ using TeamManager.Infrastructure.Shared.Auth;
 using TeamManager.Infrastructure.Shared.Time;
 using Xunit;
 
-namespace TeamManager.Tests.Integration.Controllers;
+namespace TeamManager.Tests.Integration.Shared;
 
 [Collection("api")]
 public abstract class ControllerTestBase : IClassFixture<OptionsProvider>
 {
     private readonly IJwtService _jwtService;
-    protected IRefreshTokenService refreshTokenService { get; }
+    protected IRefreshTokenService RefreshTokenService { get; }
     protected HttpClient Client { get; }
 
     protected string Authorize(Guid userId, string email)
@@ -22,12 +22,12 @@ public abstract class ControllerTestBase : IClassFixture<OptionsProvider>
         
         return jwt;
     }
-    
-    public ControllerTestBase(OptionsProvider optionsProvider)
+
+    protected ControllerTestBase(OptionsProvider optionsProvider)
     {
         var options = optionsProvider.Get<AuthOptions>("auth");
         _jwtService = new JwtService(new OptionsWrapper<AuthOptions>(options), new Clock());
-        refreshTokenService = new RefreshTokenService(new OptionsWrapper<AuthOptions>(options), new Clock());
+        RefreshTokenService = new RefreshTokenService(new OptionsWrapper<AuthOptions>(options), new Clock());
         
         var app = new TeamManagerTestApp(ConfigureServices);
         Client = app.Client;
