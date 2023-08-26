@@ -9,12 +9,11 @@ public class AssignmentDto
     public Guid Id { get; set; }
     [property: Required]
     public string Name { get;  set; } = string.Empty;
-    [property: Required]
     public string Description { get;  set; } = string.Empty;
     [property: Required]
     public int Priority { get;  set; }
     [property: Required]
     public AssignmentStatusType Status { get;  set; }
     [property: Required]
-    public DateTime StartDate { get;  set; }
+    public DateTime CreatedAt { get;  set; }
 }

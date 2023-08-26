@@ -25,7 +25,7 @@ internal sealed class PostgresAssignmentRepositoryQueries : IAssignmentRepositor
             .AsNoTracking()
             .Where(x => x.UserId == userId)
             .Where(x => status == null || x.Status == status)
-            .OrderBy(x => x.StartDate)
+            .OrderBy(x => x.CreatedAt)
             .ToListAsync();
         return results;
     }

@@ -13,6 +13,6 @@ public static class AssignmentMapper
             Description = entity.Description,
             Priority = entity.Priority,
             Status = entity.Status,
-            StartDate = entity.StartDate
+            CreatedAt = entity.CreatedAt
         };
 }
