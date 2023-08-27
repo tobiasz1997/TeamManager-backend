@@ -7,7 +7,6 @@ public class CreateAssignmentRequest
 {
     [property: Required] 
     public string Name { get; init; } = string.Empty;
-    [property: Required] 
     public string Description { get; init; } = string.Empty;
     [property: Required] 
     public int Priority { get; set; }
