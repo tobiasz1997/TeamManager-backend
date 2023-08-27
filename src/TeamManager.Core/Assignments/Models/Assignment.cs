@@ -12,9 +12,9 @@ public class Assignment
     public AssignmentDescription Description { get; private set; }
     public AssignmentPriority Priority { get; private set; }
     public AssignmentStatusType Status { get; private set; }
-    public DateTime StartDate { get; private set; }
+    public DateTime CreatedAt { get; private set; }
 
-    public Assignment(Id id, Id userId, AssignmentName name, AssignmentDescription description, AssignmentPriority priority, AssignmentStatusType status, DateTime startDate)
+    public Assignment(Id id, Id userId, AssignmentName name, AssignmentDescription description, AssignmentPriority priority, AssignmentStatusType status, DateTime createdAt)
     {
         Id = id;
         UserId = userId;
@@ -22,7 +22,7 @@ public class Assignment
         Description = description;
         Priority = priority;
         Status = status;
-        StartDate = startDate;
+        CreatedAt = createdAt;
     }
 
     public void UpdateAssignmentStatus(AssignmentStatusType status)
