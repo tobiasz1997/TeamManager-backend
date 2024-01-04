@@ -24,8 +24,8 @@ internal sealed class PostgresTimerRepositoryQueries : ITimerRepositoryQueries
             .AsNoTracking()
             .Where(x => x.UserId == userId)
             .Where(x => projectId == null || x.ProjectId == projectId)
-            .Where(x => startDate == null || x.Date <= startDate)
-            .Where(x => endDate == null || x.Date >= endDate)
+            .Where(x => startDate == null || x.Date >= startDate)
+            .Where(x => endDate == null || x.Date <= endDate)
             .OrderByDescending(x => x.Date)
             .ToListAsync();
         return result;
