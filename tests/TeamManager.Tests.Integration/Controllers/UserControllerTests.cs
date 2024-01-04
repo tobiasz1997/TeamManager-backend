@@ -28,7 +28,7 @@ public class UserControllerTests : ControllerTestBase, IDisposable
       const string password = "hardPassword123";
       
       var user = await CreateModels.CreateUser(_testDatabase, email, password);
-      Authorize(user.Id, user.Email);
+      Authorize(user);
 
       var userDto = await Client.GetFromJsonAsync<UserDto>($"{RequestUrl}/me");
 

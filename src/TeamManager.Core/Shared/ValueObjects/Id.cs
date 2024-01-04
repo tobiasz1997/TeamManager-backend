@@ -19,4 +19,6 @@ public sealed record Id
     public static implicit operator Guid(Id id) => id.Value;
 
     public static implicit operator Id(Guid id) => new(id);
+    
+    public override string ToString() => Value.ToString();
 }

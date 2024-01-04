@@ -9,6 +9,7 @@ using TeamManager.Infrastructure.Shared.Auth;
 using TeamManager.Infrastructure.Shared.Middlewares;
 using TeamManager.Infrastructure.Shared.Security;
 using TeamManager.Infrastructure.Shared.Time;
+using TeamManger.Common.Extensions.Cors;
 using TeamManger.Common.Extensions.HealthCheck;
 using TeamManger.Common.Extensions.Swagger;
 
@@ -28,6 +29,7 @@ public static class Extensions
             .AddAuth(configuration)
             .AddHttpContextAccessor()
             .AddEndpointsApiExplorer()
+            .AddCorsExtension()
             .AddSwaggerExtension()
             .AddHealthCheckExtension(configuration);
 
@@ -41,6 +43,7 @@ public static class Extensions
         app.UseSwaggerExtension();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseCorsExtension();
         app.UseHealthCheckExtension();
 
         return app;

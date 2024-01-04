@@ -1,6 +1,8 @@
-﻿namespace TeamManager.Application.Shared.Services;
+﻿using TeamManager.Core.Users.Models;
+
+namespace TeamManager.Application.Shared.Services;
 
 public interface IJwtService
 {
-    string CreateToken(Guid userId, string email);
+    string CreateToken(User user);
 }

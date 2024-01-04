@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TeamManager.Application.Shared.Services;
+using TeamManager.Core.Users.Models;
 
 namespace TeamManager.Infrastructure.Shared.Auth;
 
@@ -27,16 +28,18 @@ internal sealed class JwtService : IJwtService
                 SecurityAlgorithms.HmacSha256);
     }
 
-    public string CreateToken(Guid userId, string email)
+    public string CreateToken(User user)
     {
         var now = _clock.Current();
         var expires = now.AddMinutes(_expiry);
         
         var claims = new List<Claim>()
         {
-            new(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
-            new(JwtRegisteredClaimNames.Email, email),
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.UniqueName, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.GivenName, user.FirstName),
+            new(JwtRegisteredClaimNames.FamilyName, user.LastName),
         };
 
         var jwt = new JwtSecurityToken(_issuer, _audience, claims, now, expires, _signingCredentials);

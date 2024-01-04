@@ -44,7 +44,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
             throw new InvalidCredentialsException();
         }
 
-        var accessToken = _jwtService.CreateToken(user.Id, user.Email);
+        var accessToken = _jwtService.CreateToken(user);
         var token = await _refreshTokenRepository.GetByUserId(user.Id);
 
         if (token is null)

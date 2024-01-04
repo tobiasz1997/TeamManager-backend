@@ -84,7 +84,7 @@ public class TimerControllerTests : ControllerTestBase, IDisposable
     private async Task<Id> CreateUserAndAuthorize()
     {
         var user = await CreateModels.CreateUser(_testDatabase);
-        Authorize(user.Id, user.Email);
+        Authorize(user);
         return user.Id;
     }
 

@@ -47,7 +47,7 @@ internal sealed class RefreshTokenHandler : ICommandHandler<RefreshToken>
             throw new UserNotFoundException(token.UserId);
         }
 
-        var accessToken = _jwtService.CreateToken(user.Id, user.Email);
+        var accessToken = _jwtService.CreateToken(user);
         token = _refreshTokenService.Refresh(token);
         await _refreshTokenRepository.Update(token);
 

@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  app:
+    container_name: team_manager_app
+    build:
+      context: .
+      dockerfile: src/TeamManager.Api/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    environment:
+      - "ASPNETCORE_URLS=http://+:80"
+      - "database__connectionString=Host=postgres;Port=5432;Database=TeamManager;Username=postgres;Password=nicepassword"
+    networks:
+      - team_manager
+  
   postgres:
     image: postgres
     container_name: postgres
@@ -13,8 +28,8 @@ services:
       - 5432:5432
     volumes:
       - postgres:/var/lib/postgresql/data
-#    networks:
-#      - team_manager
+    networks:
+      - team_manager
       
   pgadmin:
     image: dpage/pgadmin4
@@ -27,8 +42,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: nicepassword
     volumes:
       - pgadmin:/var/lib/pgadmin
-#    networks:
-#      - team_manager
         
   seq:
     container_name: seq
@@ -38,13 +51,10 @@ services:
     ports:
       - 5341:80
     image: datalust/seq:latest
-#    networks:
-#      - team_manager
 
-#networks:
-#  team_manager:
-#    name: team_manager
-#    external: true
+networks:
+  team_manager:
+    driver: bridge
 
 volumes:
   postgres:

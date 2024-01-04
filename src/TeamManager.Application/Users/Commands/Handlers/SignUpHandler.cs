@@ -42,7 +42,7 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
 
         await _userRepository.AddAsync(user);
         
-        var accessToken = _jwtService.CreateToken(user.Id, user.Email);
+        var accessToken = _jwtService.CreateToken(user);
         var refreshToken = _refreshTokenService.Create(user.Id);
 
         await _refreshTokenRepository.Insert(refreshToken);
